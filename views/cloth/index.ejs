@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Clothes</title>
+</head>
+<body>
+    <h1>All Available Clothes</h1>
+
+     <a href="/cloth/new">Create new cloth</a>
+
+
+    <% allCloth.forEach((onecloth) => { %>
+        <div style="margin-bottom: 20px;">
+            <h2><%= onecloth.name %></h2>
+            <p>Description: <%= onecloth.description %></p>
+            <p>Size: <%= onecloth.size %></p>
+            <p>Price: <%= onecloth.price %></p>
+
+            <% if (onecloth.image) { %>
+                <img src="<%= onecloth.image %>" width="150">
+            <% } %>
+
+            <br>
+            <a href="/cloth/<%= onecloth._id %>">View Details</a>
+            </div>
+            <hr>
+    
+    <% }); %>
+
+</body>
+</html>

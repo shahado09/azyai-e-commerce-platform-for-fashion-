@@ -17,9 +17,13 @@ const isSignedIn = require('./middleware/is-signed-in');
 
 // Controllers
 const authCtrl = require('./controllers/auth');
+const clothCtrl = require('./controllers/cloth');
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : '3000';
+
+
+app.use(express.static('public'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Middleware to parse URL-encoded data from forms
@@ -46,17 +50,15 @@ app.use(passUserToView);
 // ---------- PUBLIC ROUTES ----------
 
 app.get('/', async (req, res) => {
-  res.render('index.ejs');
+  res.render('home.ejs');
 });
 
 app.use('/auth', authCtrl);
+app.use('/cloth', clothCtrl);
 
 // ---------- PROTECTED ROUTES ----------
 app.use(isSignedIn);
 
-app.get('/vip-lounge', async (req, res) => {
-  res.send('VIP PAGE');
-});
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <h1>New clothes</h1>
+
+    <form action="/cloth"  method="POST"  enctype="multipart/form-data">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description">
+        <br>
+         <label for="size">Size</label>
+        <select name="size" id="size">
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+        <br>
+        <label for="image">Upload Img</label>
+        <input type="file" id="image" name="image">
+        <br>
+        <label for="isAvailable">Is Available</label>
+        <input type="checkbox" id="isAvailable" name="isAvailable">
+        <br>
+        <button type="submit">Create</button>
+
+        <br>
+        <a href="/cloth"> ← Back to all clothes </a>
+
+
+
+
+
+    </form>
+</body>
+</html>
