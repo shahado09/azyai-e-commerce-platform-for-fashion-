@@ -16,19 +16,18 @@
         <br>
         <label for="description">Description</label>
         <input type="text" id="description" name="description">
+
         <br>
-         <label for="size">Size</label>
-        <select name="size" id="size">
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-        </select>
+        <label>Available Sizes:</label><br>
+        <label><input type="checkbox" name="sizes" value="XS"> XS </label>
+        <label><input type="checkbox" name="sizes" value="S"> S </label>
+        <label><input type="checkbox" name="sizes" value="M"> M </label>
+        <label><input type="checkbox" name="sizes" value="L">  L  </label>
+        <label><input type="checkbox" name="sizes" value="XL"> XL </label>
+
         <br>
-        <label for="image">Upload Img</label>
-        <input type="file" id="image" name="image">
+        <label for="image">Upload Imges</label>
+        <input type="file" id="image" name="image" multiple>
         <br>
         <label for="isAvailable">Is Available</label>
         <input type="checkbox" id="isAvailable" name="isAvailable">
