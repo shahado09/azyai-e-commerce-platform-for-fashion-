@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <h1>Clothes details</h1>
+
+        <% if (foundCloth.images && foundCloth.images.length > 0) { %>
+        <% foundCloth.images.forEach(img => { %>
+            <img src="<%= img %>" width="200" style="margin: 5px;" alt="Cloth image">
+        <% }) %>
+        <% } else { %>
+        <p>No images uploaded.</p>
+        <% } %>
+
+    <p><%= foundCloth.name %></p>
+    <p>Description:<%= foundCloth.description %></p>
+      <p>Sizes: <% if (foundCloth.sizes && foundCloth.sizes.length > 0) { %>
+        <%= foundCloth.sizes.join(', ') %>
+      <% } else { %>
+      <p>No sizes selected</p>
+    <% } %>
+  </p>
+    
+
+    <a href="/cloth/<%= foundCloth._id %>/edit">edit</a>
+    <form action="/cloth/<%= foundCloth._id %>?_method=delete" method='POST'>
+        <button type="submit">Delete</button>
+    </form>
+
+
+      <% if (foundCloth.isAvailable){ %>
+            <p>Available</p>
+        <% } else{ %>
+            <p>Not Available </p>
+            <%  } %>
+
+        <br>
+         <a href="/cloth">Back</a>
+</body>
+</html>

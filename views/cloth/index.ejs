@@ -12,14 +12,13 @@
 
 
     <% allCloth.forEach((onecloth) => { %>
-        <div style="margin-bottom: 20px;">
-            <h2><%= onecloth.name %></h2>
-            <p>Description: <%= onecloth.description %></p>
-            <p>Size: <%= onecloth.size %></p>
-            <p>Price: <%= onecloth.price %></p>
+         <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
 
-            <% if (onecloth.image) { %>
-                <img src="<%= onecloth.image %>" width="150">
+            <h2><%= onecloth.name %></h2>
+            <% if (onecloth.images && onecloth.images.length > 0) { %>
+                <img src="<%= onecloth.images[0] %>" width="200" alt="Cloth image">
+            <% } else { %>
+                <p>No image available</p>
             <% } %>
 
             <br>

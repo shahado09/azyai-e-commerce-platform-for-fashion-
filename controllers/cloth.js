@@ -10,11 +10,14 @@ const storage = multer.diskStorage({
     cb(null, path.join('public', 'uploads'));
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, `${Date.now()}-${file.originalname}`); // Unique filename
   }
 });
 
 const upload = multer({ storage });
+const multiUpload = upload.fields([
+  { name: "images", maxCount: 3}
+])
 
 
 router.get('/',async(req,res)=>{
@@ -32,19 +35,25 @@ router.get('/new',(req,res)=>{
 })
 
 
-router.post('/cloth',upload.array('image'),async(req,res)=>{
+router.post('/',multiUpload,async(req,res)=>{
 
     try{ 
          if (req.body.isAvailable){
             req.body.isAvailable=true}
          else{ req.body.isAvailable=false}
 
-        if (req.files && req.files.length > 0) {
-        req.body.images = req.files.map(file => '/uploads/' + file.filename);}
+        req.body.images = [];
+
+        if (req.files && req.files["images"]) {
+        req.files["images"].forEach((file) => {
+            req.body.images.push('/uploads/' + file.filename);
+        });
+        }
 
         console.log(req.body)
         const createdcloth =await Cloth.create(req.body)
-        res.redirect('/cloth/'+createdcloth._id)}
+        res.redirect('/cloth/'+createdcloth._id)
+    }
 
     catch(err){
         console.log(err)
@@ -54,6 +63,21 @@ router.post('/cloth',upload.array('image'),async(req,res)=>{
 })
 
 
+router.get('/:id',async (req,res)=>{
 
+  console.log(req.params.id)
+  const foundCloth =await Cloth.findById(req.params.id)
+    res.render('cloth/show.ejs',{foundCloth})
+})
+
+router.delete('/:id', async (req, res) => {
+  await Cloth.findByIdAndDelete(req.params.id)
+  res.redirect('/cloth')
+})
+
+router.get('/:id/edit', async (req,res)=>{
+  const foundCloth =await Cloth.findById(req.params.id)
+    res.render('cloth/edit.ejs',{foundCloth})
+})
 
 module.exports = router;
