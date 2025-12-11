@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    
+    <h1>Edit <%= foundCloth.name %></h1>
+
+    <form action="/cloth/<%= foundCloth._id  %>?_method=PUT"  method="POST"  enctype="multipart/form-data">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="<%= foundCloth.name %>">
+        <br>
+
+        <% if (foundCloth.images && foundCloth.images.length > 0) { %>
+        <% foundCloth.images.forEach(img => { %>
+            <img src="<%= img %>" width="200" style="margin: 5px;" alt="Cloth image">
+        <% }) %>
+        <% } else { %>
+        <p>No images uploaded.</p>
+        <% } %>
+        <br>
+
+         <label>Upload New Images:</label><br>
+         <input type="file" name="images" multiple>
+        <br>
+
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description"value="<%= foundCloth.description %>">
+        <br>
+
+        <label for="size">Size</label>
+        <label><input type="checkbox" name="sizes" value="XS"
+            <%= foundCloth.sizes.includes('XS') ? 'checked' : '' %> > XS </label>
+
+        <label><input type="checkbox" name="sizes" value="S"
+                <%= foundCloth.sizes.includes('S') ? 'checked' : '' %> > S </label>
+
+        <label><input type="checkbox" name="sizes" value="M"
+                <%= foundCloth.sizes.includes('M') ? 'checked' : '' %> > M </label>
+
+        <label><input type="checkbox" name="sizes" value="L"
+                <%= foundCloth.sizes.includes('L') ? 'checked' : '' %> > L </label>
+
+        <label> <input type="checkbox" name="sizes" value="XL"
+                <%= foundCloth.sizes.includes('XL') ? 'checked' : '' %> > XL </label>
+        <br>
+
+        <label for="isAvailable">Is Available</label>
+        <input type="checkbox" id="isAvailable" name="isAvailable" 
+        <% if (foundCloth.isAvailable) { %> checked <% } %>>
+        <br>
+        
+        <button type="submit">Create</button>
+
+        <a href="/clothe/<%= foundCloth._id %>">Cancel</a>
+</body>
+</html>
