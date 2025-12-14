@@ -16,5 +16,10 @@ function isAdmin(req, res, next) {
   next();
 }
 
+function isVendor(req, res, next) {
+  if (!req.session.user) return res.redirect("/sign-in");
+  if (req.session.user.role !== "vendor") return res.status(403).send("Forbidden (Vendor only)");
+  next();
+}
 
-module.exports =(isSignedIn,isAdmin);
+module.exports =(isSignedIn,isAdmin,isVendor);

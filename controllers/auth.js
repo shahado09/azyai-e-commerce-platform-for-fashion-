@@ -65,7 +65,9 @@ router.get('/sign-in', async (req, res) => {
 router.post('/sign-in', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const userInDatabase = await User.findOne({username: username.trim() });
+    const userInDatabase = await User.findOne({$or:[
+      {username: username.trim() },{email: email.toLowerCase().trim()}
+    ],});
 
     if (!userInDatabase) {
       return res.send(INVALID_MSG);

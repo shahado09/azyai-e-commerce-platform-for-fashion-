@@ -47,6 +47,10 @@ app.use(
 
 // Locals
 app.use(passUserToView);
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.user || null;
+  next();
+});
 
 // ---------- PUBLIC ROUTES ----------
 
@@ -57,6 +61,8 @@ app.get('/', async (req, res) => {
 app.use('/auth', authCtrl);
 app.use('/cloth', clothCtrl);
 
+
+const { sendEmail } = require("./utils/mailer");
 
 
 // ---------- PROTECTED ROUTES ----------
