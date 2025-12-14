@@ -4,9 +4,58 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/user');
 
+const INVALID_MSG = "Username, Email, or Password is invalid";
+
+
+// GET sign-up 
 router.get('/sign-up', async (req, res, next) => {
   res.render('auth/sign-up.ejs');
 });
+
+
+//POST sign-up 
+router.post('/sign-up', async (req, res) => {
+  try {
+    const { username,email, password, confirmPassword } = req.body;
+    const userInDatabase = await User.findOne({$or:[
+      {username: username.trim() },{email: email.toLowerCase().trim()}
+    ],});
+
+    if (userInDatabase) {
+      return res.send(INVALID_MSG);}
+
+    if (password !== confirmPassword) {
+      return res.send(INVALID_MSG);}
+
+      
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // create user
+    const user = await User.create(req.body);
+    req.session.user = {
+    username: user.username,
+    email: email.toLowerCase().trim(),
+    password: hashedPassword,
+    role: "customer"
+    };
+
+    // session info
+    req.session.user = {
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    _id: user._id,
+    };
+
+    req.session.save(() => {
+      res.redirect('/');
+    });
+  } catch (error) {
+    console.error(error);
+    res.send('Something went wrong with registration!');
+  }
+});
+
 
 router.get('/sign-out', async (req, res) => {
   try {
@@ -16,44 +65,6 @@ router.get('/sign-out', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.redirect('/');
-  }
-});
-
-router.post('/sign-up', async (req, res) => {
-  try {
-    const { username, password, confirmPassword } = req.body;
-    // make sure the user does not exist
-    const userInDatabase = await User.findOne({ username });
-
-    if (userInDatabase) {
-      return res.send('Username or Password is invalid');
-    }
-    // validate the passwords match
-    if (password !== confirmPassword) {
-      return res.send('Username or Password is invalid');
-    }
-    // take the password and encrypt in some way.
-    const hashPassword = bcrypt.hashSync(password, 10);
-
-    // If the above passes, then let's create the account
-    // with the encrypted password.
-    req.body.password = hashPassword;
-    delete req.body.confirmPassword;
-
-    const user = await User.create(req.body);
-    // when that succeeds let's go ahead and "sign the person in"
-    // rediret them to some page
-    req.session.user = {
-      username: user.username,
-      _id: user._id,
-    };
-
-    req.session.save(() => {
-      res.redirect('/');
-    });
-  } catch (error) {
-    console.error(error);
-    res.send('Something went wrong with registration!');
   }
 });
 

@@ -2,6 +2,11 @@ const mongoose= require('mongoose')
 
 //schema
 const clothSchema = new mongoose.Schema({
+
+  userId: { 
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User", 
+          required: true },
   name: { type: String, required: true },       
   sizes: [{ type: String, required: true }],        
   description: { type: String, required: true }, 
