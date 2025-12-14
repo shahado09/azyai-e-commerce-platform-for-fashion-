@@ -81,31 +81,21 @@ router.put('/:id',multiUpload, async (req,res)=>{
   try{
   if (req.body.isAvailable){req.body.isAvailable=true}
   else{ req.body.isAvailable=false}
-
   const updateData = {
   name: req.body.name,
   description: req.body.description,
   sizes: req.body.sizes,
   isAvailable: req.body.isAvailable};
- 
-
   if (req.files && req.files["images"] && req.files["images"].length > 0) {
     updateData.images = req.files["images"].map(file => '/uploads/' + file.filename);}
 
-    
   const updated = await Cloth.findByIdAndUpdate( req.params.id,updateData,{ new: true });
-
    res.redirect('/cloth/' + updated._id);
   }
-
   catch(err){
         console.log(err)
         res.render('cloth/new.ejs', { errorMessage: 'Something went wrong. Please try again.' });
-    }
-})
-
-
-
+    }})
 // delete
 router.delete('/:id', async (req, res) => {
   await Cloth.findByIdAndDelete(req.params.id)

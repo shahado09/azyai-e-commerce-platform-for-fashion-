@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// we need mongoose schema
+//mongoose schema
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -11,8 +11,28 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-});
-// then we register the model with mongoose
+
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true,
+    lowercase: true,
+    trim: true },
+
+  passwordHash: {
+    type: String,
+    required: true },
+
+  role: {
+      type: String,
+      enum: ["customer", "vendor", "admin"], 
+      default: "customer"}
+    },
+
+  { timestamps: true } );
+
+
+//the model with mongoose
 const User = mongoose.model('User', userSchema);
 
 // export the model

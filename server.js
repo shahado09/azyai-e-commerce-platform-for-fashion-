@@ -18,29 +18,30 @@ const isSignedIn = require('./middleware/is-signed-in');
 // Controllers
 const authCtrl = require('./controllers/auth');
 const clothCtrl = require('./controllers/cloth');
+const vendorCtrl = require("./controllers/vendor"); 
+const adminCtrl = require("./controllers/admin");  
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : '3000';
-
-
 app.use(express.static('public'));
-
 app.use(express.static(path.join(__dirname, 'public')));
-// Middleware to parse URL-encoded data from forms
+
+
+// Middleware 
 app.use(express.urlencoded({ extended: false }));
-// Middleware for using HTTP verbs such as PUT or DELETE
 app.use(methodOverride('_method'));
+
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
+
 // Session
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
-    }),
+    store: MongoStore.create({mongoUrl: process.env.MONGODB_URI,collectionName: "sessions"}),
+    cookie: { httpOnly: true}
   })
 );
 
@@ -55,6 +56,8 @@ app.get('/', async (req, res) => {
 
 app.use('/auth', authCtrl);
 app.use('/cloth', clothCtrl);
+
+
 
 // ---------- PROTECTED ROUTES ----------
 app.use(isSignedIn);
