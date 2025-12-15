@@ -50,7 +50,7 @@
         <br>
 
         <label for="price">Price</label>
-        <input type="price" id="price" name="price"value="<%= foundCloth.price %>">
+        <input type="number" id="price" name="price"value="<%= foundCloth.price %>">
         <br>
 
         <label for="isAvailable">Is Available</label>
@@ -61,5 +61,7 @@
         <button type="submit">Update</button>
 
         <a href="/cloth/<%= foundCloth._id %>">Cancel</a>
+
+    </form>
 </body>
 </html>

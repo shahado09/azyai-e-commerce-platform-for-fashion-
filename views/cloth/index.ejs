@@ -8,7 +8,7 @@
 <body>
     <h1>All Available Clothes</h1>
 
-    <% if (isOwner || isAdmin){ %>
+    <% if (currentUser &&(currentUser.role === "vendor" || currentUser.role === "admin")){ %>
      <a href="/cloth/new">Create new cloth</a>
     <% } %>
 

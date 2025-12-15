@@ -39,7 +39,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({mongoUrl: process.env.MONGODB_URI,collectionName: "sessions"}),
     cookie: { httpOnly: true}
   })
@@ -62,6 +62,8 @@ const { sendEmail } = require("./utils/mailer");
 
 
 // ---------- PROTECTED ROUTES ----------
+// app.use("/vendor", vendorCtrl);
+// app.use("/admin", adminCtrl);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

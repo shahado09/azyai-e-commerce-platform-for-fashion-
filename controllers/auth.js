@@ -18,6 +18,7 @@ router.post('/sign-up', async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body;
 
+    if (!username || !email || !password) return res.send(INVALID_MSG);
     if (password !== confirmPassword) {
       return res.send(INVALID_MSG);
     }
