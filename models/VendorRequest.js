@@ -14,7 +14,7 @@ const vendorRequestSchema = new mongoose.Schema({
         required: true,
         trim: true },
 
-    VendorName: {
+    vendorName: {
         type: String, 
         required: true,
         trim: true },

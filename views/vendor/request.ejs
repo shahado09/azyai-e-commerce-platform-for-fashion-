@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <%- include('../partials/_navbar.ejs') %>
+    <h1>Vendor Page</h1>
+
+    <% if(!latest){ %>
+        <p>You have not submitted a vendor request yet.</p>
+
+        <form action="/vendor/request" method="POST" >
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram" name="instagram" required>
+            <br>
+            <label for="vendorName">Store Name</label>
+            <input type="text" id="vendorName" name="vendorName" required>
+            <br>
+            <label for="aboutVendor">about Store</label>
+            <textarea name="aboutVendor" id="aboutVendor" required></textarea>
+            <br>
+            <button type="submit">Submit Request</button>
+        </form>
+
+
+
+    <% } else if(latest.status === "pending"){ %>
+
+          <p>Status:Pending</p>
+          <p>Your request is under review by the admin.</p>
+        
+    <% } else if (latest.status === "approved") { %>
+
+            <p>Status: Approved</p>
+            <p>You are now a vendor!</p>
+            <a href="/cloth/new">Add New Cloth</a>
+
+    <% } else { %>
+
+        <p>Status:Rejected</p>
+
+        <% if (latest.adminNote) { %>
+            <p>Admin Note: <%= latest.adminNote %></p>
+        <% } %>
+
+        <h2>Re Apply</h2>
+        <form action="/vendor/request" method="POST">
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram" name="instagram" required>
+            <br>
+            <label for="vendorName">Store Name</label>
+            <input type="text" id="vendorName" name="vendorName" required>
+            <br>
+            <label for="aboutVendor">about Store</label>
+            <textarea name="aboutVendor" id="aboutVendor" required></textarea>
+            <button type="submit">Re Submit Request</button>
+        </form>
+            <% } %>
+
+</body>
+</html>

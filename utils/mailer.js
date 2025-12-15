@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
 
 async function sendVendorRequestToAdmin({userEmail, userName, instagram, vendortName, vendorProject}){
     const subject = `New Vendor Request - ${userName}`;
-    const text=` Name: ${userName} Email: ${userEmail} Instagram: ${instagram} Project: ${projectName}
-    About:${aboutProject} Admin Panel: ${process.env.BASE_URL}/admin/vendor-requests`;
+    const text=` Name: ${userName} Email: ${userEmail} Instagram: ${instagram} Project: ${vendortName}
+    About:${vendorProject} Admin Panel: ${process.env.BASE_URL}/admin/vendor-requests`;
 
     await transporter.sendMail({ from: process.env.EMAIL_USER, to: process.env.ADMIN_EMAIL,subject,text,});
 }
@@ -40,5 +40,7 @@ async function sendDecisionToUser(toEmail, userName, decision, adminNote) {
         Thanks,
         Azyai Team`;}
 
-        await transporter.sendMail({ from: process.env.EMAIL_USER, to: toEmail, subject: subject, text: text, });
+  await transporter.sendMail({ from: process.env.EMAIL_USER, to: toEmail, subject: subject, text: text, });
 }
+
+module.exports = { sendVendorRequestToAdmin, sendDecisionToUser };

@@ -62,7 +62,7 @@ const { sendEmail } = require("./utils/mailer");
 
 
 // ---------- PROTECTED ROUTES ----------
-// app.use("/vendor", vendorCtrl);
+app.use("/vendor", vendorCtrl);
 // app.use("/admin", adminCtrl);
 
 app.listen(port, () => {
