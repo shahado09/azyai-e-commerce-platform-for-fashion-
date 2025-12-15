@@ -22,4 +22,4 @@ function isVendor(req, res, next) {
   next();
 }
 
-module.exports =(isSignedIn,isAdmin,isVendor);
+module.exports =( isSignedIn ,isAdmin , isVendor);

@@ -16,28 +16,32 @@ router.get('/sign-up', async (req, res, next) => {
 //POST sign-up 
 router.post('/sign-up', async (req, res) => {
   try {
-    const { username,email, password, confirmPassword } = req.body;
-    const userInDatabase = await User.findOne({$or:[
-      {username: username.trim() },{email: email.toLowerCase().trim()}
-    ],});
-
-    if (userInDatabase) {
-      return res.send(INVALID_MSG);}
+    const { username, email, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
-      return res.send(INVALID_MSG);}
+      return res.send(INVALID_MSG);
+    }
 
-      
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const userInDatabase = await User.findOne({
+      $or: [
+        { username: username.trim() },
+        { email: email.toLowerCase().trim() }
+      ],
+    });
 
+    if (userInDatabase) {
+      return res.send(INVALID_MSG);
+    }
+
+
+    const passwordHash = await bcrypt.hash(password, 12);
     // create user
-    const user = await User.create(req.body);
-    req.session.user = {
-    username: user.username,
-    email: email.toLowerCase().trim(),
-    password: hashedPassword,
-    role: "customer"
-    };
+    const user = await User.create({
+      username: username.trim(),
+      email: email.toLowerCase().trim(),
+      passwordHash: passwordHash,
+      role: "customer",
+    });
 
     // session info
     req.session.user = {
@@ -64,17 +68,22 @@ router.get('/sign-in', async (req, res) => {
 //POST sign-in
 router.post('/sign-in', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const userInDatabase = await User.findOne({$or:[
-      {username: username.trim() },{email: email.toLowerCase().trim()}
-    ],});
+
+  const { identifier, password } = req.body;
+
+    const userInDatabase = await User.findOne({
+      $or: [
+        { username: identifier.trim() },
+        { email: identifier.toLowerCase().trim() },
+      ],
+    });
 
     if (!userInDatabase) {
       return res.send(INVALID_MSG);
     }
 
 
-    const isValidPassword = await bcrypt.compare(password, userInDatabase.password);
+   const isValidPassword = await bcrypt.compare(password, userInDatabase.passwordHash);
 
     if (!isValidPassword) {
       return res.send(INVALID_MSG);
