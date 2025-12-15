@@ -49,6 +49,7 @@ router.post('/',multiUpload,async(req,res)=>{
         });
         }
 
+        req.body.userId = req.session.user._id;
         console.log(req.body)
         const createdcloth =await Cloth.create(req.body)
         res.redirect('/cloth/'+createdcloth._id)

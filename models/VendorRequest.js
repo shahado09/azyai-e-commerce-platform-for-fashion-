@@ -41,4 +41,4 @@ vendorRequestSchema.index({ userId: 1, status: 1 });
 const VendorRequest=mongoose.model('VendorRequest',vendorRequestSchema)
 
 // export the model
-module.exports = User;
+module.exports = VendorRequest;

@@ -7,6 +7,7 @@ const clothSchema = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "User", 
           required: true },
+          
   name: { type: String, required: true },       
   sizes: [{ type: String, required: true }],        
   description: { type: String, required: true }, 
