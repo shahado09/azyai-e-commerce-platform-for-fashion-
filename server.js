@@ -13,7 +13,7 @@ const { MongoStore } = require('connect-mongo');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
 const passUserToView = require('./middleware/pass-user-to-view.js');
-const isSignedIn = require('./middleware/is-signed-in');
+const { isLoggedIn, isVendorOrAdmin, ownsClothOrAdmin } = require("./middleware/access-control");
 
 // Controllers
 const authCtrl = require('./controllers/auth');
@@ -47,10 +47,6 @@ app.use(
 
 // Locals
 app.use(passUserToView);
-app.use((req, res, next) => {
-  res.locals.currentUser = req.session.user || null;
-  next();
-});
 
 // ---------- PUBLIC ROUTES ----------
 
@@ -66,8 +62,6 @@ const { sendEmail } = require("./utils/mailer");
 
 
 // ---------- PROTECTED ROUTES ----------
-app.use(isSignedIn);
-
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

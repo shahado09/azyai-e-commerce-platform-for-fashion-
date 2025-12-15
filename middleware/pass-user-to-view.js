@@ -1,6 +1,7 @@
 const passUserToView = (req, res, next) => {
-  res.locals.userId = req.session.userId ? req.session.userId: null;
+  res.locals.currentUser = req.session.user || null;
   next();
 };
+
 
 module.exports = passUserToView;

@@ -27,9 +27,13 @@
   </p>
     
 
+    <% if (currentUser &&(currentUser.role === "vendor" || currentUser.role === "admin")){ %>
+  
     <a href="/cloth/<%= foundCloth._id %>/edit">edit</a>
     <form action="/cloth/<%= foundCloth._id %>?_method=delete" method='POST'>
         <button type="submit">Delete</button>
+    <% } %>
+        
     </form>
 
 

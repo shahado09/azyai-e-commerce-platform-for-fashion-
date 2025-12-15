@@ -17,7 +17,7 @@ function isAdmin(req, res, next) {
 }
 
 function isVendorOrAdmin(req, res, next) {
-  if (!req.session.user) return res.redirect("/sign-in");
+  if (!req.session.user) return res.redirect("/auth/sign-in");
   const role = req.session.user.role;
   if (role === "vendor" || role === "admin") return next();
   return res.status(403).send("Vendor Or Admin Only!!!");
@@ -25,7 +25,7 @@ function isVendorOrAdmin(req, res, next) {
 }
 
 
-async function ownsClothOrAdmin(req,res,nex){
+async function ownsClothOrAdmin(req,res,next){
 
   const Cloth = require("../models/cloth");
   const cloth = await Cloth.findById(req.params.id);
@@ -37,7 +37,9 @@ async function ownsClothOrAdmin(req,res,nex){
    if (req.session.user.role === "vendor" && cloth.userId.equals(req.session.user._id))
     return next();
 
+  return res.status(403).send("Not your cloth");
+
 } 
-module.exports =( isSignedIn ,isAdmin , isVendorOrAdmin,ownsClothOrAdmin);
+module.exports ={isSignedIn ,isAdmin , isVendorOrAdmin,ownsClothOrAdmin};
 
 

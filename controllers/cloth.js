@@ -3,6 +3,7 @@ const router = express.Router();
 const Cloth =require("../models/cloth")
 const multer = require('multer');
 const path = require('path');
+const { isSignedIn, isVendorOrAdmin, ownsClothOrAdmin } = require("../middleware/access-control");
 
 // mutler
 const storage = multer.diskStorage({
@@ -29,12 +30,12 @@ router.get('/',async(req,res)=>{
 })
 
 // new
-router.get('/new',(req,res)=>{
+router.get('/new', isSignedIn ,isVendorOrAdmin ,(req,res)=>{
     res.render('cloth/new.ejs')
 })
 
 // create
-router.post('/',multiUpload,async(req,res)=>{
+router.post('/', isSignedIn ,isVendorOrAdmin, multiUpload,async(req,res)=>{
 
     try{ 
          if (req.body.isAvailable){
@@ -73,11 +74,11 @@ router.get('/:id',async (req,res)=>{
 
 
 // update
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin, async (req, res) => {
   const foundCloth = await Cloth.findById(req.params.id);
   res.render('cloth/edit.ejs', { foundCloth });
 });
-router.put('/:id',multiUpload, async (req,res)=>{
+router.put('/:id',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin,multiUpload, async (req,res)=>{
   
   try{
   if (req.body.isAvailable){req.body.isAvailable=true}
@@ -98,7 +99,7 @@ router.put('/:id',multiUpload, async (req,res)=>{
         res.render('cloth/new.ejs', { errorMessage: 'Something went wrong. Please try again.' });
     }})
 // delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin, async (req, res) => {
   await Cloth.findByIdAndDelete(req.params.id)
   res.redirect('/cloth')
 })

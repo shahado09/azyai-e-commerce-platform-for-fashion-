@@ -12,7 +12,8 @@ const clothSchema = new mongoose.Schema({
   sizes: [{ type: String, required: true }],        
   description: { type: String, required: true }, 
   images: [{ type: String, required: true }],                           
-  isAvailable: { type: Boolean, default: true }  
+  isAvailable: { type: Boolean, default: true },  
+  price: {type: Number,required: true,},
 })
 
 // model
