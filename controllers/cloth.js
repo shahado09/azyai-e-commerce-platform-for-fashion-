@@ -69,7 +69,14 @@ router.get('/:id',async (req,res)=>{
 
   console.log(req.params.id)
   const foundCloth =await Cloth.findById(req.params.id)
-    res.render('cloth/show.ejs',{foundCloth})
+
+  const isSignedIn = !!req.session.user; 
+
+  const isAdmin = isSignedIn && req.session.user.role === "admin";
+
+  const isOwner = isSignedIn && req.session.user.role === "vendor" && foundCloth.userId.equals(req.session.user._id);
+
+  res.render('cloth/show.ejs',{foundCloth,isOwner,isAdmin})
 })
 
 
