@@ -19,4 +19,15 @@ router.get("/vendor-requests", isAdmin, async (req, res) => {
     res.status(400).send("Error approving request");
   }});
 
-// post vendor req router 
+// update vendor req router 
+router.put('/vendor-requists',isAdmin ,async(req,res)=>{
+
+  try{
+    const createdRequest =  await VendorRequest.findById(req.params.id).populate("userId");
+
+  }
+
+  catch (err) {
+    console.error(err);
+    res.status(400).send("Error approving request");}
+})
