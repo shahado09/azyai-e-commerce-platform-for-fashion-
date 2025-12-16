@@ -8,43 +8,61 @@
 </head>
 <body>
     <%- include('../partials/_navbar.ejs') %>
+
+    <div class="page">
+      <div class="show-card">
         <h1>Clothes details</h1>
+        <div class="show-img-box">
+          <% if (foundCloth.images && foundCloth.images.length > 0) { %>
+          <% foundCloth.images.forEach(img => { %>
+              <img class="show-img"src="<%= img %>"  alt="Cloth image">
+          <% }) %>
+          <% } else { %>
+          <p>No images uploaded.</p>
+          <% } %>
 
-        <% if (foundCloth.images && foundCloth.images.length > 0) { %>
-        <% foundCloth.images.forEach(img => { %>
-            <img src="<%= img %>" width="200" style="margin: 5px;" alt="Cloth image">
-        <% }) %>
-        <% } else { %>
-        <p>No images uploaded.</p>
-        <% } %>
-
-    <p><%= foundCloth.name %></p>
-    <p>Description:<%= foundCloth.description %></p>
-      <p>Sizes: <% if (foundCloth.sizes && foundCloth.sizes.length > 0) { %>
+          <% if (foundCloth.images && foundCloth.images.length > 1) { %>
+          <div class="show-thumbs">
+            <% foundCloth.images.forEach((img) => { %>
+              <img class="show-thumb" src="<%= img %>" alt="thumb">
+            <% }) %>
+          </div>
+           <% } %>
+          </div>
+    <div class="show-details">
+    <h1 class="show-title"><%= foundCloth.name %></h1>
+    <p class="show-price"><%= foundCloth.price %> BD</p>
+    <p class="show-desc"><%= foundCloth.description %></p>
+      <p class="show-size">Sizes: <% if (foundCloth.sizes && foundCloth.sizes.length > 0) { %>
         <%= foundCloth.sizes.join(', ') %>
       <% } else { %>
       <p>No sizes selected</p>
     <% } %>
-  </p>
-    
 
-    <% if (isOwner || isAdmin){ %>
-  
-    <a href="/cloth/<%= foundCloth._id %>/edit">edit</a>
-    <form action="/cloth/<%= foundCloth._id %>?_method=delete" method='POST'>
-        <button type="submit">Delete</button>
-    <% } %>
-        
-    </form>
-
-
-      <% if (foundCloth.isAvailable){ %>
+    <div class="is-available">
+        <% if (foundCloth.isAvailable){ %>
             <p>Available</p>
         <% } else{ %>
             <p>Not Available </p>
-            <%  } %>
-
+            <%  } %></div>
+  </p>
+    
+    <div class="show-actions">
+    <% if (isOwner || isAdmin){ %>
+  
+    <a class="edit-btn" href="/cloth/<%= foundCloth._id %>/edit">edit</a>
+    <form action="/cloth/<%= foundCloth._id %>?_method=DELETE" method='POST'>
+        <button class="delete-btn" type="submit">Delete</button>
+    <% } %>
+        
+    </form>
         <br>
+
          <a href="/cloth">Back</a>
+
+         </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
