@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    
+    <%- include('../partials/_navbar.ejs') %>
     <h1>Edit <%= foundCloth.name %></h1>
 
     <form action="/cloth/<%= foundCloth._id  %>?_method=PUT"  method="POST"  enctype="multipart/form-data">

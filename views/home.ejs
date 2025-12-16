@@ -8,21 +8,31 @@
 </head>
 <body>
     <%- include('./partials/_navbar.ejs') %>
-    <h1> Welcome to Azyai</h1>
-        <ul>
-            <% if (currentUser) { %>
-        <li><a href="/vendor/request">Vendor</a><% } %></li>
 
-        <li><a href="/cloth">View All Clothes</a></li>
-        <li><a href="/auth">acount</a></li>
+    <div class="page">
+
+        <div class="logo-box">
+            <img class="logo-img" src="/images/logo-banner.png" alt="Azyai banner">
+        </div>
+        <h1 class="home-title">Welcome to Azyai</h1>
+        <p class="home-subtitle">Discover unique fashion from local designers.</p>
+        
+         <% if (currentUser) { %>
+        <a class="vendor-link" href="/vendor/request">You Want to be a Vendor?</a><% } %>
+
+        <div class="home-actions">
+        <a href="/cloth" class="All-Clothes-btn">View All Clothes</a>
         <% if (currentUser &&(currentUser.role === "vendor" || currentUser.role === "admin")){ %>
-        <li><a href="/cloth/new">Add New Cloth</a></li>
+        <a href="/cloth/new" class="add-new-cloth-btn">Add New Cloth</a>
         <% } %>
         <% if (currentUser && currentUser.role === "admin") { %>
-        <li><a href="/admin/vendor-requests">Review Vendor Requests</a></li>
+        <a href="/admin/vendor-requests" class="review-vendor-requests-btn">Review Vendor Requests</a>
         <% } %>
+        </div>
 
-    </ul>
+    
 
+  
+    </div>
 </body>
 </html>
