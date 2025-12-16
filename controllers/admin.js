@@ -12,7 +12,7 @@ router.get("/vendor-requests", isAdmin, async (req, res) => {
     console.log("body:", req.body);
     const requests = await VendorRequest.find().populate("userId").sort({ createdAt: -1 });
 
-    res.render("admin/vendorRequests.ejs", { requests });
+    res.render("admin/vendor-requests.ejs", { requests });
   } 
   catch (err) {
     console.error(err);
@@ -20,7 +20,7 @@ router.get("/vendor-requests", isAdmin, async (req, res) => {
   }});
 
 // vendor approve req router 
-router.put('/vendor-requists/:id/approve',isAdmin ,async(req,res)=>{
+router.put('/vendor-requests/:id/approve',isAdmin ,async(req,res)=>{
 
   try{
     const createdRequest =  await VendorRequest.findById(req.params.id).populate("userId");
@@ -28,17 +28,12 @@ router.put('/vendor-requists/:id/approve',isAdmin ,async(req,res)=>{
 
     createdRequest.status="approved";
     adminNote="";
-    await  save();
+    await  createdRequest.save();
 
 
     await User.findByIdAndUpdate(createdRequest.userId._id,{role:"vendor"})
 
-    await sendDecisionToUser({
-      toEmail:createdRequest.userId.email, 
-      userName:createdRequest.userId.username, 
-      decision:'approved', 
-      adminNote:'',
-    });
+    await sendDecisionToUser(createdRequest.userId.email,createdRequest.userId.username,"approved","");
     res.redirect("/admin/vendor-requests");}
 
   catch (err) {
@@ -47,25 +42,17 @@ router.put('/vendor-requists/:id/approve',isAdmin ,async(req,res)=>{
 })
 
 // vendor reject req router 
-router.put('/vendor-requists/:id/reject',isAdmin ,async(req,res)=>{
+router.put('/vendor-requests/:id/reject',isAdmin ,async(req,res)=>{
 
   try{
     const createdRequest =  await VendorRequest.findById(req.params.id).populate("userId");
     if(!createdRequest){return res.status(404).send("Request not found");}
 
     createdRequest.status="rejected";
-    adminNote=req.body.adminNote || "there is no note";
-    await  save();
+    createdRequest.adminNote =req.body.adminNote || "there is no note";
+    await  createdRequest.save();
 
-
-    await User.findByIdAndUpdate(createdRequest.userId._id,{role:"vendor"})
-
-    await sendDecisionToUser({
-      toEmail:createdRequest.userId.email, 
-      userName:createdRequest.userId.username, 
-      decision:'rejected', 
-      adminNote:createdRequest.adminNote,
-    });
+    await sendDecisionToUser(createdRequest.userId.email,createdRequest.userId.username,"rejected",createdRequest.adminNote);
     res.redirect("/admin/vendor-requests");}
 
   catch (err) {

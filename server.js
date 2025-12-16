@@ -13,7 +13,7 @@ const { MongoStore } = require('connect-mongo');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
 const passUserToView = require('./middleware/pass-user-to-view.js');
-const { isLoggedIn, isVendorOrAdmin, ownsClothOrAdmin } = require("./middleware/access-control");
+const { isSignedIn, isVendorOrAdmin, ownsClothOrAdmin } = require("./middleware/access-control");
 
 // Controllers
 const authCtrl = require('./controllers/auth');

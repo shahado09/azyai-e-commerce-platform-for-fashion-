@@ -21,15 +21,15 @@
         <th>status</th>
     </tr>
     
-    <% Requests.forEach(oneReq => { %>
+    <% requests.forEach(oneReq => { %>
         <tr>
-        <td><%= oneReq.userId?.username %></td>
         <td><%= oneReq.userId?.email %></td>
+        <td><%= oneReq.userId?.username %></td>
         <td><%= oneReq.instagram %></td>
         <td><%= oneReq.vendorName %></td>
         <td><%= oneReq.aboutVendor %></td>
         <td>
-            <%= if(oneReq.status==="pending"){ %>
+            <% if(oneReq.status==="pending"){ %>
                     <form action="/admin/vendor-requests/<%= oneReq._id %>/approve?_method=PUT" method="POST">
                         <button type="submit">Approve</button>
                     </form>

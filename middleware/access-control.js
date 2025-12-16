@@ -9,12 +9,9 @@ const isSignedIn = (req, res, next) => {
 };
 
 function isAdmin(req, res, next) {
-
-  if (!req.session.userId) return res.redirect("/auth/sign-in");
-  if (req.session.role !== "admin") return res.status(403).send("Admin only!!");
-
-  next();
-}
+  if (!req.session.user) return res.redirect("/auth/sign-in");
+  if (req.session.user.role !== "admin") return res.status(403).send("Admin only!!");
+  next();}
 
 function isVendorOrAdmin(req, res, next) {
   if (!req.session.user) return res.redirect("/auth/sign-in");
