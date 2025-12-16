@@ -8,28 +8,80 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
     <%- include('../partials/_navbar.ejs') %>
-    <h1>All Available Clothes</h1>
+    <div class="page">
+        <% if (currentUser && (currentUser.role === "vendor" || currentUser.role === "admin")) { %>
+            <div class="section">
+                <div class="section-header">
+                    <h1 class="section-title">My Clothes</h1>
+                    <a class="btn-primary" href="/cloth/new"> + Create New Cloth</a>
+                </div>  
 
-    <% if (currentUser &&(currentUser.role === "vendor" || currentUser.role === "admin")){ %>
-     <a href="/cloth/new">Create new cloth</a>
-    <% } %>
+                <% if (myCloth.length===0) {%>
+                    <p class="empty-text">You haven't added any clothes yet.</p>
 
-    <% allCloth.forEach((onecloth) => { %>
-         <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+                <% } else{ %>
+                    <div class="cloth-grid">
+                    <% myCloth.forEach(onecloth=>{ %> 
+                        <div class="cloth-card">
+                            <a class="cloth-img-box" href="/cloth/<%= onecloth._id %>">
+                                <% if (onecloth.images && onecloth.images.length > 0) { %>
+                                    <img class="cloth-img" src="<%= onecloth.images[0] %>" alt="cloth">
+                                <% } else { %>
+                                <div class="cloth-noimg">No image</div>
+                                <% } %>
+                            </a>
 
-            <h2><%= onecloth.name %></h2>
-            <% if (onecloth.images && onecloth.images.length > 0) { %>
-                <img src="<%= onecloth.images[0] %>" width="200" alt="Cloth image">
-            <% } else { %>
-                <p>No image available</p>
-            <% } %>
-
-            <br>
-            <a href="/cloth/<%= onecloth._id %>">View Details</a>
+                                                
+                            <div class="cloth-info">
+                            <h2 class="cloth-name"><%= onecloth.name %></h2>
+                            <a class="btn-link" href="/cloth/<%= onecloth._id %>">View Details</a>
+                            </div>
+                        </div> 
+                    <% }) %>
+                <% } %>
             </div>
-            <hr>
-    
-    <% }); %>
+        <% }  %>
+
+        <div class="cloth-grid">
+            <% allcloth.forEach(onecloth=>{ %> 
+             <div class="cloth-card">
+            <a class="cloth-img-box" href="/cloth/<%= onecloth._id %>">
+            <% if (onecloth.images && onecloth.images.length > 0) { %>
+                <img class="cloth-img" src="<%= onecloth.images[0] %>" alt="cloth">
+            <% } else { %>
+                    <div class="cloth-noimg">No image</div>
+                <% } %>
+                </a>
+
+                                                
+                <div class="cloth-info">
+                    <h2 class="cloth-name"><%= onecloth.name %></h2>
+                     <a class="btn-link" href="/cloth/<%= onecloth._id %>">View Details</a>
+                     </div>
+
+                     <% }) %>
+                    </div> 
+
+
+        
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
 </body>
 </html>

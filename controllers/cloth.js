@@ -22,8 +22,17 @@ const multiUpload = upload.fields([
 // index
 router.get('/',async(req,res)=>{
     try{
-        const allCloth= await Cloth.find()
-        res.render('cloth/index.ejs',{allCloth})}
+
+      const currentUser = req.session.user;
+
+      const allCloth= await Cloth.find().sort({createdAt: -1})
+
+      let myCloth=[];
+      if(currentUser && (currentUser.role === "vendor" || currentUser.role === "admin"))
+        myCloth = await Cloth.find({ userId: currentUser._id }).sort({ createdAt: -1 });
+
+
+        res.render('cloth/index.ejs',{allCloth,myCloth,currentUser})}
     catch (error) {
     console.error(error);
     res.send("Error loading clothes");}
@@ -38,6 +47,7 @@ router.get('/new', isSignedIn ,isVendorOrAdmin ,(req,res)=>{
 router.post('/', isSignedIn ,isVendorOrAdmin, multiUpload,async(req,res)=>{
 
     try{ 
+        const currentUser = req.session.user;
          if (req.body.isAvailable){
             req.body.isAvailable=true}
          else{ req.body.isAvailable=false}
@@ -50,7 +60,7 @@ router.post('/', isSignedIn ,isVendorOrAdmin, multiUpload,async(req,res)=>{
         });
         }
 
-        req.body.userId = req.session.user._id;
+        req.body.userId = currentUser;
         console.log(req.body)
         const createdcloth =await Cloth.create(req.body)
         res.redirect('/cloth/'+createdcloth._id)
@@ -69,12 +79,13 @@ router.get('/:id',async (req,res)=>{
 
   console.log(req.params.id)
   const foundCloth =await Cloth.findById(req.params.id)
+  
+  const currentUser = req.session.user;
+  const isSignedIn = !!currentUser; 
 
-  const isSignedIn = !!req.session.user; 
+  const isAdmin = isSignedIn && currentUser.role === "admin";
 
-  const isAdmin = isSignedIn && req.session.user.role === "admin";
-
-  const isOwner = isSignedIn && req.session.user.role === "vendor" && foundCloth.userId.equals(req.session.user._id);
+  const isOwner = isSignedIn && currentUser.role === "vendor" && foundCloth.userId.equals(req.session.user._id);
 
   res.render('cloth/show.ejs',{foundCloth,isOwner,isAdmin})
 })
@@ -83,7 +94,7 @@ router.get('/:id',async (req,res)=>{
 // update
 router.get('/:id/edit',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin, async (req, res) => {
   const foundCloth = await Cloth.findById(req.params.id);
-  res.render('cloth/edit.ejs', { foundCloth });
+  res.render('cloth/edit.ejs', { foundCloth,currentUser: req.session.user });
 });
 router.put('/:id',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin,multiUpload, async (req,res)=>{
   
@@ -94,6 +105,7 @@ router.put('/:id',isSignedIn,isVendorOrAdmin,ownsClothOrAdmin,multiUpload, async
   name: req.body.name,
   description: req.body.description,
   sizes: req.body.sizes,
+  price: req.body.price,
   isAvailable: req.body.isAvailable};
   if (req.files && req.files["images"] && req.files["images"].length > 0) {
     updateData.images = req.files["images"].map(file => '/uploads/' + file.filename);}
