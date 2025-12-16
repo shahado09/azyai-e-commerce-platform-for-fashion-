@@ -48,7 +48,7 @@ router.post("/request", isSignedIn, async (req, res) => {
     });
 
 
-    res.redirect("/vendor"); } 
+    res.redirect("vendor/request.ejs"); } 
     
     catch (err) {
     console.error(err);

@@ -63,8 +63,10 @@ const { sendEmail } = require("./utils/mailer");
 
 // ---------- PROTECTED ROUTES ----------
 app.use("/vendor", vendorCtrl);
-// app.use("/admin", adminCtrl);
+app.use("/admin", adminCtrl);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
+
+

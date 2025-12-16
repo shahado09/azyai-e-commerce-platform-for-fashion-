@@ -72,3 +72,5 @@ router.put('/vendor-requists/:id/reject',isAdmin ,async(req,res)=>{
     console.error(err);
     res.status(400).send("Error approving request");}
 })
+
+module.exports = router;

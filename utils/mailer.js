@@ -9,10 +9,10 @@ const transporter = nodemailer.createTransport({
 });
 
 
-async function sendVendorRequestToAdmin({userEmail, userName, instagram, vendortName, vendorProject}){
+async function sendVendorRequestToAdmin({userEmail, userName, instagram, vendortName, aboutVendor}){
     const subject = `New Vendor Request - ${userName}`;
     const text=` Name: ${userName} Email: ${userEmail} Instagram: ${instagram} Project: ${vendortName}
-    About:${vendorProject} Admin Panel: ${process.env.BASE_URL}/admin/vendor-requests`;
+    About:${aboutVendor} Admin Panel: ${process.env.BASE_URL}/admin/vendor-requests`;
 
     await transporter.sendMail({ from: process.env.EMAIL_USER, to: process.env.ADMIN_EMAIL,subject,text,});
 }

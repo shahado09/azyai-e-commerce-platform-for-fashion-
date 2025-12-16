@@ -11,7 +11,8 @@
     <h1> Welcome to Azyai</h1>
         <ul>
             <% if (currentUser) { %>
-        <a href="/vendor/request">Vendor</a><% } %>
+        <li><a href="/vendor/request">Vendor</a><% } %></li>
+        <li><a href="/admin/vendor-requests">Review Vendor Requests</a></li>
         <li><a href="/cloth">View All Clothes</a></li>
         <li><a href="/auth">acount</a></li>
         <% if (currentUser &&(currentUser.role === "vendor" || currentUser.role === "admin")){ %>

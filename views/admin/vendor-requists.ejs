@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+   <%- include('../partials/_navbar.ejs') %>
+
+  <h1>Admin Panel: Vendor Requests</h1>
+
+  <table>
+    <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>instagram</th>
+        <th>vendortName</th>
+        <th>aboutVendor</th>
+        <th>status</th>
+    </tr>
+    
+    <% Requests.forEach(oneReq => { %>
+        <tr>
+        <td><%= oneReq.userId?.username %></td>
+        <td><%= oneReq.userId?.email %></td>
+        <td><%= oneReq.instagram %></td>
+        <td><%= oneReq.vendorName %></td>
+        <td><%= oneReq.aboutVendor %></td>
+        <td>
+            <%= if(oneReq.status==="pending"){ %>
+                    <form action="/admin/vendor-requests/<%= oneReq._id %>/approve?_method=PUT" method="POST">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form action="/admin/vendor-requests/<%= oneReq._id %>/approve?_method=PUT" method="POST">
+                        <input  type="text" name="adminNote"/>
+                        <button type="submit">Reject</button>
+                    </form>
+                 <% }%>
+        
+        </td>
+        </tr>
+    <% });%>
+
+
+
+  </table>
+
+</body>
+</html>
