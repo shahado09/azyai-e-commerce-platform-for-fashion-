@@ -1,68 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <%- include('../partials/_navbar.ejs') %>
-    <h1>Edit <%= foundCloth.name %></h1>
 
-    <form action="/cloth/<%= foundCloth._id  %>?_method=PUT"  method="POST"  enctype="multipart/form-data">
+  <%- include('../partials/_navbar.ejs') %>
 
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<%= foundCloth.name %>">
-        <br>
+  <div class="page">
+    <div class="form-card">
+      <h1 class="form-title">Edit Cloth</h1>
 
-        <% if (foundCloth.images && foundCloth.images.length > 0) { %>
-        <% foundCloth.images.forEach(img => { %>
-            <img src="<%= img %>" width="200" style="margin: 5px;" alt="Cloth image">
-        <% }) %>
-        <% } else { %>
-        <p>No images uploaded.</p>
-        <% } %>
-        <br>
+      <form class="form" action="/cloth/<%= foundCloth._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
-         <label>Upload New Images:</label><br>
-         <input type="file" name="images" multiple>
-        <br>
+        <div class="form-group">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-input" type="text" id="name" name="name" value="<%= foundCloth.name %>">
+        </div>
 
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description"value="<%= foundCloth.description %>">
-        <br>
+        <div class="form-group">
+          <label class="form-label" for="description">Description</label>
+          <input class="form-input" type="text" id="description" name="description" value="<%= foundCloth.description %>">
+        </div>
 
-        <label for="size">Size</label>
-        <label><input type="checkbox" name="sizes" value="XS"
-            <%= foundCloth.sizes.includes('XS') ? 'checked' : '' %> > XS </label>
+        <div class="form-group">
+          <label class="form-label" for="price">Price (BD)</label>
+          <input class="form-input" type="text" id="price" name="price" step="0.1" value="<%= foundCloth.price %>">
+        </div>
 
-        <label><input type="checkbox" name="sizes" value="S"
-                <%= foundCloth.sizes.includes('S') ? 'checked' : '' %> > S </label>
+        <div class="sizes-row">
+          <label class="form-label">Available Sizes:</label>
 
-        <label><input type="checkbox" name="sizes" value="M"
-                <%= foundCloth.sizes.includes('M') ? 'checked' : '' %> > M </label>
+          <label class="form-label">
+            <input class="form-input" type="checkbox" name="sizes" value="XS"
+              <%= (foundCloth.sizes && foundCloth.sizes.includes("XS")) ? "checked" : "" %> >
+            XS
+          </label>
 
-        <label><input type="checkbox" name="sizes" value="L"
-                <%= foundCloth.sizes.includes('L') ? 'checked' : '' %> > L </label>
+          <label class="form-label">
+            <input class="form-input" type="checkbox" name="sizes" value="S"
+              <%= (foundCloth.sizes && foundCloth.sizes.includes("S")) ? "checked" : "" %> >
+            S
+          </label>
 
-        <label> <input type="checkbox" name="sizes" value="XL"
-                <%= foundCloth.sizes.includes('XL') ? 'checked' : '' %> > XL </label>
-        <br>
+          <label class="form-label">
+            <input class="form-input" type="checkbox" name="sizes" value="M"
+              <%= (foundCloth.sizes && foundCloth.sizes.includes("M")) ? "checked" : "" %> >
+            M
+          </label>
 
-        <label for="price">Price</label>
-        <input type="number" id="price" name="price"value="<%= foundCloth.price %>">
-        <br>
+          <label class="form-label">
+            <input class="form-input" type="checkbox" name="sizes" value="L"
+              <%= (foundCloth.sizes && foundCloth.sizes.includes("L")) ? "checked" : "" %> >
+            L
+          </label>
 
-        <label for="isAvailable">Is Available</label>
-        <input type="checkbox" id="isAvailable" name="isAvailable" 
-        <% if (foundCloth.isAvailable) { %> checked <% } %>>
-        <br>
+          <label class="form-label">
+            <input class="form-input" type="checkbox" name="sizes" value="XL"
+              <%= (foundCloth.sizes && foundCloth.sizes.includes("XL")) ? "checked" : "" %> >
+            XL
+          </label>
+        </div>
 
-        <button type="submit">Update</button>
+        <div class="form-group">
+          <label class="form-label" for="images">Upload Imges</label>
+          <input class="form-input" type="file" id="images" name="images" multiple>
+          <p class="form-hint">* If you upload new images, they will replace the old ones.</p>
+        </div>
 
-        <a href="/cloth/<%= foundCloth._id %>">Cancel</a>
+        <div class="form-check">
+          <label class="form-label" for="isAvailable">Is Available</label>
+          <input class="form-input" type="checkbox" id="isAvailable" name="isAvailable"
+            <%= foundCloth.isAvailable ? "checked" : "" %> >
+        </div>
 
-    </form>
+        <div class="form-actions">
+          <button class="Create-btn" type="submit">Update</button>
+          <a class="Cancel-btn" href="/cloth/<%= foundCloth._id %>">Cancel</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
 </body>
 </html>

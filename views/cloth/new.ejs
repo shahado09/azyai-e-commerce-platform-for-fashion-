@@ -13,7 +13,7 @@
         <div class="form-card">
             <h1 class="form-title">Add New Cloth</h1>
 
-            <form action="/cloth"  method="POST"  enctype="multipart/form-data">
+            <form class="form" action="/cloth"  method="POST"  enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label class="form-label" for="name">Name</label>
@@ -25,19 +25,16 @@
                     <input class="form-input" type="text" id="description" name="description">
                 </div>
                 
-
-                
                     <div class="form-group">
                         <label class="form-label" for="price">Price (BD)</label>
                         <input class="form-input" type="text" id="price" name="price" step="0.1">
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Available Sizes:</label>
-                        <label class="form-label" ><input class="form-input" type="checkbox" name="sizes" value="XS"> XS </label>
-                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="S"> S </label>
-                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="M"> M </label>
-                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="L">  L  </label>
-                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="XL"> XL </label>
+                    <div class="sizes-row">
+                        <label><input type="checkbox" name="sizes" value="XS"> XS</label>
+                        <label><input type="checkbox" name="sizes" value="S"> S</label>
+                        <label><input type="checkbox" name="sizes" value="M"> M</label>
+                        <label><input type="checkbox" name="sizes" value="L"> L</label>
+                        <label><input type="checkbox" name="sizes" value="XL"> XL</label>
                     </div>
                 
 
