@@ -457,4 +457,76 @@ body {
 }
 
 
+/* new page */
+
+.form-card{
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 22px;
+}
+
+.form-title{
+  font-size: 26px;
+  margin-bottom: 18px;
+  color: #111827;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label{
+  font-weight: 800;
+  color: #111827;
+}
+
+.form-input{
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-input:focus{
+  border-color: #3b4f7f;
+  box-shadow: 0 0 0 3px rgba(59,79,127,0.15);
+}
+
+
+
+.form-check{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.form-file{
+  border: 1px dashed #cbd5e1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.form-actions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
 

@@ -8,45 +8,59 @@
 </head>
 <body>
     <%- include('../partials/_navbar.ejs') %>
-    <h1>New clothes</h1>
 
-    <form action="/cloth"  method="POST"  enctype="multipart/form-data">
+    <div class="page">
+        <div class="form-card">
+            <h1 class="form-title">Add New Cloth</h1>
 
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name">
-        <br>
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description">
+            <form action="/cloth"  method="POST"  enctype="multipart/form-data">
 
-        <br>
-        <label>Available Sizes:</label><br>
-        <label><input type="checkbox" name="sizes" value="XS"> XS </label>
-        <label><input type="checkbox" name="sizes" value="S"> S </label>
-        <label><input type="checkbox" name="sizes" value="M"> M </label>
-        <label><input type="checkbox" name="sizes" value="L">  L  </label>
-        <label><input type="checkbox" name="sizes" value="XL"> XL </label>
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-input" type="text" id="name" name="name">
+                </div>
 
-        <br>
-        <label for="images">Upload Imges</label>
-        <input type="file" id="images" name="images" multiple>
-        <br>
-        <label for="price">Price</label>
-        <input type="number" id="price" name="price">
-        <br>
-        <label for="isAvailable">Is Available</label>
-        <input type="checkbox" id="isAvailable" name="isAvailable">
-        <br>
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <input class="form-input" type="text" id="description" name="description">
+                </div>
+                
+
+                
+                    <div class="form-group">
+                        <label class="form-label" for="price">Price (BD)</label>
+                        <input class="form-input" type="text" id="price" name="price" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Available Sizes:</label>
+                        <label class="form-label" ><input class="form-input" type="checkbox" name="sizes" value="XS"> XS </label>
+                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="S"> S </label>
+                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="M"> M </label>
+                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="L">  L  </label>
+                        <label class="form-label"><input class="form-input" type="checkbox" name="sizes" value="XL"> XL </label>
+                    </div>
+                
+
+                <div class="form-group">
+                    <label class="form-label" for="images">Upload Imges</label>
+                    <input class="form-input" type="file" id="images" name="images" multiple>
+                </div>
+
+                <div class="form-check">
+                    <label class="form-label" for="isAvailable">Is Available</label>
+                    <input class="form-input" type="checkbox" id="isAvailable" name="isAvailable">
+                </div>
 
 
-        <button type="submit">Create</button>
-
-        <br>
-        <a href="/cloth"> ← Back to all clothes </a>
-
-
+                <div class="form-actions">
+                    <button class="Create-btn" type="submit">Create</button>
+                    <a class="Cancel-btn" href="/cloth">Cancel</a>
+                </div>
 
 
+            </form>
 
-    </form>
+        </div>
+    </div>
 </body>
 </html>
