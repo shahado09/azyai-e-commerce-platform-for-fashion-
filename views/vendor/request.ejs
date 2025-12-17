@@ -8,58 +8,77 @@
 </head>
 <body>
      <%- include('../partials/_navbar.ejs') %>
-    <h1>Vendor Page</h1>
 
-    <% if(!latest){ %>
-        <p>You have not submitted a vendor request yet.</p>
+    <div class="page">
+        <div class="form-card">
+            <h1 class="form-title">Request To Be A Vendor </h1>
 
-        <form action="/vendor/request" method="POST" >
-            <label for="instagram">Instagram</label>
-            <input type="text" id="instagram" name="instagram" required>
-            <br>
-            <label for="vendorName">Store Name</label>
-            <input type="text" id="vendorName" name="vendorName" required>
-            <br>
-            <label for="aboutVendor">about Store</label>
-            <textarea name="aboutVendor" id="aboutVendor" required></textarea>
-            <br>
-            <button type="submit">Submit Request</button>
-        </form>
+            <% if(!latest){ %>
+                <p class="vendor-text">You have not submitted a vendor request yet.</p>
+
+                <form class="form" action="/vendor/request" method="POST" >
+                    <div class="form-group">
+                        <label class="form-label" for="instagram">Instagram</label>
+                        <input class="form-input" type="text" id="instagram" name="instagram" required>
+                        
+                        <label class="form-label" for="vendorName">Store Name</label>
+                        <input class="form-input"  type="text" id="vendorName" name="vendorName" required>
+                        
+                        <label class="form-label" for="aboutVendor">about Store</label>
+                        <textarea class="form-input" name="aboutVendor" id="aboutVendor" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="Create-btn" type="submit">Submit Request</button>
+                        <a class="Cancel-btn" href="/">Cancel</a>
+                    </div>
+                </form>
 
 
 
-    <% } else if(latest.status === "pending"){ %>
+            <% } else if(latest.status === "pending"){ %>
+                    <div class="status-pending">
+                        <p class="status-title">Status: Pending</p>
+                        <p class="vendor-text">Your request is under review by the admin.</p>
+                    </div>
+                
+            <% } else if (latest.status === "approved") { %>
 
-          <p>Status:Pending</p>
-          <p>Your request is under review by the admin.</p>
-        
-    <% } else if (latest.status === "approved") { %>
+                    <div class="status-approved">
+                        <p class="status-title">Status: Approved</p>
+                        <p class="vendor-text">You are now a vendor!</p>
+                        <a class="Create-btn" href="/cloth/new">Add New Cloth</a>
+                        
+                    </div>
 
-            <p>Status: Approved</p>
-            <p>You are now a vendor!</p>
-            <a href="/cloth/new">Add New Cloth</a>
+            <% } else { %>
+                    <div class="status-rejected">
+                        <p class="status-title">Status: Rejected</p>
 
-    <% } else { %>
+                        <% if (latest.adminNote) { %>
+                            <p class="admin-note">Admin Note: <%= latest.adminNote %></p>
+                        <% } %>
+                    </div>
 
-        <p>Status:Rejected</p>
+                <h2 class="reapply-title">Re Apply</h2>
+                <form class="form" action="/vendor/request" method="POST">
 
-        <% if (latest.adminNote) { %>
-            <p>Admin Note: <%= latest.adminNote %></p>
-        <% } %>
-
-        <h2>Re Apply</h2>
-        <form action="/vendor/request" method="POST">
-            <label for="instagram">Instagram</label>
-            <input type="text" id="instagram" name="instagram" required>
-            <br>
-            <label for="vendorName">Store Name</label>
-            <input type="text" id="vendorName" name="vendorName" required>
-            <br>
-            <label for="aboutVendor">about Store</label>
-            <textarea name="aboutVendor" id="aboutVendor" required></textarea>
-            <button type="submit">Re Submit Request</button>
-        </form>
-            <% } %>
-
+                    <div class="form-group">
+                        <label class="form-label" for="instagram">Instagram</label>
+                        <input class="form-input" type="text" id="instagram" name="instagram" required>
+                        <br>
+                        <label class="form-label" for="vendorName">Store Name</label>
+                        <input class="form-input"type="text" id="vendorName" name="vendorName" required>
+                        <br>
+                        <label class="form-label" for="aboutVendor">about Store</label>
+                        <textarea class="form-input" name="aboutVendor" id="aboutVendor" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="Create-btn" type="submit">Re Submit Request</button>
+                        <a class="Cancel-btn" href="/">Cancel</a>
+                    </div>
+                </form>
+                    <% } %>
+        </div>
+    </div>
 </body>
 </html>

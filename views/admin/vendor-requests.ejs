@@ -10,43 +10,57 @@
     
    <%- include('../partials/_navbar.ejs') %>
 
-  <h1>Admin Panel: Vendor Requests</h1>
-
-  <table>
-    <tr>
-        <th>Email</th>
-        <th>Username</th>
-        <th>instagram</th>
-        <th>vendortName</th>
-        <th>aboutVendor</th>
-        <th>status</th>
-    </tr>
-    
-    <% requests.forEach(oneReq => { %>
+   <div class="page">
+    <h1  class="admin-title">Admin Panel: Vendor Requests</h1>
+    <div class="admin-table">
+    <table class="table">
         <tr>
-        <td><%= oneReq.userId?.email %></td>
-        <td><%= oneReq.userId?.username %></td>
-        <td><%= oneReq.instagram %></td>
-        <td><%= oneReq.vendorName %></td>
-        <td><%= oneReq.aboutVendor %></td>
-        <td>
-            <% if(oneReq.status==="pending"){ %>
-                    <form action="/admin/vendor-requests/<%= oneReq._id %>/approve?_method=PUT" method="POST">
-                        <button type="submit">Approve</button>
-                    </form>
-                    <form action="/admin/vendor-requests/<%= oneReq._id %>/reject?_method=PUT" method="POST">
-                        <input  type="text" name="adminNote"/>
-                        <button type="submit">Reject</button>
-                    </form>
-                 <% }%>
-        
-        </td>
+            <th>Email</th>
+            <th>Username</th>
+            <th>instagram</th>
+            <th>store Name</th>
+            <th>about store</th>
+            <th>status</th>
+            <th>Admin Note</th>
         </tr>
-    <% });%>
+        
+        <% requests.forEach(oneReq => { %>
+            <tr>
+            <td><%= oneReq.userId?.email %></td>
+            <td><%= oneReq.userId?.username %></td>
+            <td><%= oneReq.instagram %></td>
+            <td><%= oneReq.vendorName %></td>
+            <td class="about-col"><%= oneReq.aboutVendor %></td>
+
+            <td class="note-action">
+    
+                <% if(oneReq.status==="pending"){ %>
+                        <form class="form" action="/admin/vendor-requests/<%= oneReq._id %>/approve?_method=PUT" method="POST">
+                            <button class="approve-btn" type="submit">Approve</button>
+                        </form>
+                        <form id="reject-<%= oneReq._id %>" class="form" action="/admin/vendor-requests/<%= oneReq._id %>/reject?_method=PUT" method="POST">
+                            <button class="reject-btn"type="submit">Reject</button>
+                        </form>
+                    <% } else { %>
+                          <span class="status-text"><%= oneReq.status %></span>
+                    <% } %>
+                
+            </td>
+
+            <td class="note-col">
+                <% if(oneReq.status === "pending"){ %>
+                <input class="admin-input" form="reject-<%= oneReq._id %>" type="text" name="adminNote" placeholder="Reason">
+                <% } else { %>
+                <div class="note-text"><%= oneReq.adminNote ? oneReq.adminNote : "-" %></div>
+                <% } %>
+            </td>
+            </tr>
+        <% });%>
 
 
 
-  </table>
-
+    </table>
+    </div>
+ </div>
 </body>
 </html>
