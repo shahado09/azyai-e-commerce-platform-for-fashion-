@@ -7,24 +7,33 @@
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
-    <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="POST">
 
-      <label for="email">Email:</label>
-      <input type="email" name="email" id="email" />
+    <div class="page">
+      <div class="form-card">
+        <h1 class="form-title">Create a new account!</h1>
+        <form class="form" action="/auth/sign-up" method="POST">
 
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+          <div class="form-group">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-input" type="email" name="email" id="email" />
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
+            <label  class="form-label" for="username">Username:</label>
+            <input class="form-input" type="text" name="username" id="username" />
 
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
-      <button type="submit">Sign up</button>
+            <label  class="form-label" for="password">Password:</label>
+            <input class="form-input" type="password" name="password" id="password" />
 
-        <p> Already have an account? <a href="/sign-in">Sign In</a></p>
-        
-    </form>
+            <label  class="form-label" for="confirmPassword">Confirm Password:</label>
+            <input class="form-input" type="password" name="confirmPassword" id="confirmPassword" />
+          </div>
+            
+          <div class="form-actions">
+          <button class="Create-btn" type="submit">Sign Up</button>
+          <a class="Cancel-btn" href="/auth/sign-in">I already have an account</a>
+        </div>
+            
+        </form>
+      </div>
+    </div>
   </body>
 </html>
