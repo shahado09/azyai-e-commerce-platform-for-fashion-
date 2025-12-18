@@ -8,7 +8,7 @@ const { sendVendorRequestToAdmin } = require("../utils/mailer");
 // get req router 
 router.get("/request", isSignedIn, async (req, res) => {
   try {
-    console.log("body:", req.body);
+
     const latest = await VendorRequest.findOne({ userId: req.session.user._id }).sort({ createdAt: -1 });
     res.render("vendor/request.ejs", { latest });
   } 
@@ -28,7 +28,7 @@ router.post("/request", isSignedIn, async (req, res) => {
 
     if (pending) {return res.redirect("/vendor/request");}
 
-    console.log({ instagram, vendorName, aboutVendor });
+ 
     const createdRequest = await VendorRequest.create({
       userId: req.session.user._id,
       instagram: instagram.trim(),

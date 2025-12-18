@@ -61,7 +61,6 @@ router.post('/', isSignedIn ,isVendorOrAdmin, multiUpload,async(req,res)=>{
         }
 
         req.body.userId = currentUser;
-        console.log(req.body)
         const createdcloth =await Cloth.create(req.body)
         res.redirect('/cloth/'+createdcloth._id)
     }
@@ -77,7 +76,7 @@ router.post('/', isSignedIn ,isVendorOrAdmin, multiUpload,async(req,res)=>{
 // show
 router.get('/:id',async (req,res)=>{
 
-  console.log(req.params.id)
+  
   const foundCloth =await Cloth.findById(req.params.id)
   
   const currentUser = req.session.user;
