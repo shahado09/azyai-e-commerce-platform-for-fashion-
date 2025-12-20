@@ -57,7 +57,6 @@ I built **AZYAI** to practice building a full MEN stack CRUD application with au
    ```env
    MONGODB_URI=your_mongodb_connection_string
    SESSION_SECRET=your_session_secret
-   # If using Nodemailer
    EMAIL_USER=your_email
    EMAIL_PASS=your_password_or_app_password
    ADMIN_EMAIL=admin_email_to_receive_requests
